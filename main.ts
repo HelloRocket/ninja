@@ -21,6 +21,8 @@ basic.showLeds(`
     . # # # .
     # . . . #
     `)
+let Points = 0
+let Wait = 500
 basic.pause(500)
 basic.showString("Ninja")
 basic.clearScreen()
@@ -35,11 +37,17 @@ Ninja_foot = game.createSprite(0, 4)
 basic.forever(function () {
     if (Bomb.get(LedSpriteProperty.Y) == 4) {
         Bomb.delete()
+        Points += 1
         Bomb = game.createSprite(randint(0, 1) * 4, 0)
     } else if (Bomb.get(LedSpriteProperty.X) == Ninja_hand.get(LedSpriteProperty.X) && Bomb.get(LedSpriteProperty.Y) == Ninja_hand.get(LedSpriteProperty.Y)) {
+        music.playTone(988, music.beat(BeatFraction.Sixteenth))
+        music.playTone(740, music.beat(BeatFraction.Whole))
+        game.setScore(Points)
         game.gameOver()
     } else {
         Bomb.change(LedSpriteProperty.Y, 1)
-        basic.pause(500)
+        music.playTone(147, music.beat(BeatFraction.Sixteenth))
+        basic.pause(Wait)
     }
+    Wait += -5
 })
